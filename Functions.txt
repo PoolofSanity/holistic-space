@@ -1,0 +1,18 @@
+
+#Converting NA to zeroes
+na.zero <- function (x) {
+  x[is.na(x)] <- 0
+  return(x)
+}
+
+#Recycle Reuse Reduce
+Data <- lapply(Files[1:9], read.csv)
+taluk.all <- list()
+for (i in 1:9){
+  taluk.all[[i]] <- Data[[i]][,4]
+}
+taluk.all <- Reduce(intersect, taluk.all)
+
+#casting
+Schoolcode <- Data[, c(3, 31, 2)]
+Schoolcode <- cast(Schoolcode, Block_Name ~ acyear, length)
